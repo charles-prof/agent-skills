@@ -11,6 +11,7 @@ Skills extend agent capabilities with battle-tested procedures, complex toolchai
 | Category | Skill | Path | Description |
 | :--- | :--- | :--- | :--- |
 | **Workflow / Video** | `video-logo-removal` | [`workflow/video-editing/removals/`](./workflow/video-editing/removals/) | Spatial inpainting (`delogo`) & matting (`drawbox`) for frame-accurate graphic removal without cutting footage or desyncing audio. |
+| **Research / Reviews** | `google-reviews-verification` | [`research/reviews/google-reviews-verification/`](./research/reviews/google-reviews-verification/) | Scrape, authenticate, and cross-verify real Google Reviews with a mandatory human-in-the-loop confirmation gate, Zero AI avatar policy, and schema generator. |
 | **CMS / WordPress** | `wordpress-core-fse` | [`cms/wordpress/core-fse/`](./cms/wordpress/core-fse/) | Production runbook for decoupled WordPress Full Site Editing (FSE) block themes, strict 8pt grid, bespoke dynamic blocks (API v3 + render.php), SMACSS architecture, and declarative registries. |
 
 ---
