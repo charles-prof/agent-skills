@@ -1,0 +1,22 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "namespace/example-feature",
+  "version": "1.0.0",
+  "title": "Example Feature Block",
+  "category": "theme-blocks",
+  "icon": "star-filled",
+  "description": "Bespoke dynamic feature block with semantic BEM markup.",
+  "keywords": ["feature", "showcase", "fse"],
+  "supports": {
+    "html": false,
+    "align": ["wide", "full"]
+  },
+  "attributes": {
+    "entityId": {
+      "type": "string",
+      "default": ""
+    }
+  },
+  "render": "file:./render.php"
+}
