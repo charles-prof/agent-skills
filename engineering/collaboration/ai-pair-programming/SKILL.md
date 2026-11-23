@@ -20,8 +20,10 @@ This framework transforms AI pairing from an unpredictable single-agent interact
 
 When an AI agent pairs on any task, the following five production hard-gates must be strictly respected:
 
-1. **Gate 1: Project Topology & Roster Approval Before Code**
-   Never modify source files without first establishing the active team roster (size, roles, personas). The agent must run the project topology detector (`scripts/detect-team-topology.mjs`) or adopt an approved team configuration.
+1. **Gate 1: Project Topology, BMad Tooling & Roster Approval Before Code**
+   Never modify source files without first establishing the active team roster (size, roles, personas) and tooling capabilities. The agent must run the project topology detector (`scripts/detect-team-topology.mjs`). If the BMad Method is not detected and the project has testing, architectural, or PRD requirements, the agent must proactively propose:
+   *"Would you like to install the BMad suite to give Murat full Test Engineering Architecture (TEA) capabilities and Winston architectural design tools?"*
+   Installation only proceeds upon explicit user approval.
 2. **Gate 2: Interactive Alignment Gate (`/grill-me` + `/plan`)**
    For non-trivial features, refactors, or architectural shifts, the agent must ask clarifying multiple-choice questions with recommended options and generate an approved plan spec before modifying code. Never assume requirements.
 3. **Gate 3: The "Two Main Players" & Inversion Safeguard**
@@ -99,15 +101,15 @@ classDiagram
 
 ### The 7 Canonical Archetypes
 
-| Persona | Badge | Role | Primary Responsibility | Governed Gates |
-| :--- | :---: | :--- | :--- | :--- |
-| **Winston** | 📐 | **System Architect** | Persistence schemas, state slices, modular boundaries, tech debt analysis. | Gate 1, Gate 2 |
-| **Sally** | 🎨 | **UX & Design Specialist** | Visual hierarchies, glassmorphic styling, Tailwind v4 tokens, responsive layouts. | Gate 3 |
-| **Eleanor** | 🌿 | **Human Experience & Empathy** | Cognitive load audits, light/dark contrast serenity, filtering technical jargon. | Gate 3, Gate 5 |
-| **Chloe** | 📜 | **Brand & Storyteller** | Mission narrative, onboarding copy, brand consistency, public voice. | Gate 2 |
-| **Amelia** | 💻 | **Lead Software Engineer** | High-fidelity component code, bug fixes, refactoring, atomic conventional commits. | Gate 4 |
-| **Murat** | 🛡️ | **QA Test Architect** | Unit tests (Vitest/Jest), boundary regressions, automated quality gates. | Gate 5 |
-| **John** | 🚀 | **Product Manager** | User stories, acceptance criteria, milestone releases, and human-readable release notes. | Gate 2, Gate 5 |
+| Persona | Badge | Role | Primary Responsibility | Paired BMad Superpower | Governed Gates |
+| :--- | :---: | :--- | :--- | :--- | :--- |
+| **Winston** | 📐 | **System Architect** | Persistence schemas, state slices, modular boundaries, tech debt analysis. | `bmad-create-architecture`, `bmad-check-implementation-readiness` | Gate 1, Gate 2 |
+| **Sally** | 🎨 | **UX & Design Specialist** | Visual hierarchies, glassmorphic styling, Tailwind v4 tokens, responsive layouts. | `bmad-create-ux-design` | Gate 3 |
+| **Eleanor** | 🌿 | **Human Experience & Empathy** | Cognitive load audits, light/dark contrast serenity, filtering technical jargon. | `bmad-cis-design-thinking`, `bmad-editorial-review-prose` | Gate 3, Gate 5 |
+| **Chloe** | 📜 | **Brand & Storyteller** | Mission narrative, onboarding copy, brand consistency, public voice. | `bmad-cis-storytelling`, `bmad-cis-presentation-master` | Gate 2 |
+| **Amelia** | 💻 | **Lead Software Engineer** | High-fidelity component code, bug fixes, refactoring, atomic conventional commits. | `bmad-dev-story`, `bmad-quick-dev`, `bmad-code-review` | Gate 4 |
+| **Murat** | 🛡️ | **QA Test Architect** | Unit tests (Vitest/Jest), boundary regressions, automated quality gates. | `bmad-tea`, `bmad-testarch-atdd`, `bmad-testarch-trace`, `bmad-testarch-nfr` | Gate 5 |
+| **John** | 🚀 | **Product Manager** | User stories, acceptance criteria, milestone releases, and human-readable release notes. | `bmad-create-prd`, `bmad-validate-prd`, `bmad-create-epics-and-stories` | Gate 2, Gate 5 |
 
 ---
 
@@ -232,6 +234,65 @@ No feature or version is released without passing through the final quality gate
      git commit -m "feat(module): descriptive human-readable summary"
      ```
    - Commit types: `feat`, `fix`, `style`, `refactor`, `test`, `chore`, `docs`.
+
+---
+
+## ⚡ BMad Ecosystem Synergy: Supercharging Personas with Tooling
+
+While `ai-pair-programming` serves as the team's operational system, alignment protocol, and regression defense system, the **BMad Method** provides the executable heavy machinery.
+
+When BMad is installed, our personas transform from conversational archetypes into tool-backed execution specialists:
+
+```mermaid
+flowchart LR
+    subgraph Governance["ai-pair-programming (Operating System)"]
+        G1[Alignment Gates /plan, /grill-me]
+        G2[Two Main Players & Inversion Defense]
+        G3[Atomic Reversible Commits]
+        G4[Eleanor Empathy Jargon Filter]
+    end
+
+    subgraph Tooling["BMad Method (Heavy Machinery)"]
+        TEA["Murat TEA Suite<br/>(bmad-tea, ATDD, Trace Matrix, NFR)"]
+        ARCH["Winston Architecture<br/>(bmad-create-architecture, Readiness)"]
+        PM["John Product Lifecycle<br/>(bmad-create-prd, Epics & Stories)"]
+        DEV["Amelia Dev Engine<br/>(bmad-dev-story, bmad-code-review)"]
+    end
+
+    Governance <--> Tooling
+```
+
+### 1. Murat's Industrial-Grade Test Engineering Architecture (TEA)
+Without BMad, AI agents typically run simple test commands (`npm test`). With BMad, Murat activates an enterprise-grade QA suite:
+- **`bmad-tea`:** Murat acts as the Master Test Architect, designing quality strategies before implementation begins.
+- **`bmad-testarch-atdd`:** Generates failing acceptance tests using a strict Test-Driven Development (TDD) cycle.
+- **`bmad-testarch-test-design`:** Produces epic-level and system-level test matrices covering positive, negative, and boundary paths.
+- **`bmad-testarch-trace`:** Generates a full traceability matrix mapping user stories directly to test assertions.
+- **`bmad-testarch-nfr`:** Audits non-functional requirements (performance benchmarks, memory leaks, security boundaries).
+- **`bmad-testarch-test-review`:** Reviews test quality adversarially to eliminate tautological or flaky tests.
+- **`bmad-code-review`:** Runs parallel review layers (Blind Hunter, Edge Case Hunter, Acceptance Auditor).
+
+### 2. Winston's Architectural Design Suite
+- **`bmad-create-architecture`:** Authoritative technical architecture and solution design documentation.
+- **`bmad-check-implementation-readiness`:** Validates PRD, UX, Architecture, and Epics specifications for complete alignment before coding.
+
+### 3. John's Agile Product Engine
+- **`bmad-create-prd` & `bmad-validate-prd`:** Structured Product Requirements Documents with strict validation.
+- **`bmad-create-epics-and-stories` & `bmad-create-story`:** Breaks macro goals into context-packed story spec files ready for Amelia.
+
+### 4. Proactive BMad Recommendation & Installation Flow
+When the project topology detector reports that BMad is absent in a project that contains tests or architectural complexity, the agent must execute this protocol:
+1. **Explain the Value:** Briefly articulate the benefits (unlocking Murat's ATDD testing suite and Winston's architecture design).
+2. **Request Explicit User Consent:** Ask the user:
+   > *"We detected testing frameworks in this codebase, but BMad is not installed. Would you like to install the BMad suite to give Murat full Test Engineering Architecture (TEA) capabilities and Winston architectural design tools?"*
+3. **Install Upon Approval:** Upon receiving user confirmation, run the standard installation:
+   ```bash
+   # Via npx
+   npx bmad-method install
+
+   # Or via Antigravity plugin
+   agy plugin install https://github.com/bmad-code/bmad-method.git
+   ```
 
 ---
 

@@ -49,23 +49,34 @@ This skill codifies **real-world production lessons** into an executable runbook
 
 ## 👥 Meet the Canonical Personas
 
-| Persona | Badge | Role | Domain |
-| :--- | :---: | :--- | :--- |
-| **Winston** | 📐 | **System Architect** | Persistence schemas, state slices, WASM/Worker RPC, system boundaries. |
-| **Sally** | 🎨 | **UX & Design Specialist** | Design systems, glassmorphism, Tailwind CSS, responsive layouts. |
-| **Eleanor** | 🌿 | **Human Experience & Empathy** | Cognitive load audits, light/dark contrast serenity, humane simplicity. |
-| **Chloe** | 📜 | **Brand & Storyteller** | Mission narrative, onboarding copy, brand consistency, public voice. |
-| **Amelia** | 💻 | **Lead Software Engineer** | Modern component code, bug fixes, refactoring, atomic conventional commits. |
-| **Murat** | 🛡️ | **QA Test Architect** | Unit tests (Vitest/Jest), boundary regressions, automated quality gates. |
-| **John** | 🚀 | **Product Manager** | User stories, acceptance criteria, milestone releases, and human-readable release notes. |
+| Persona | Badge | Role | Domain | Paired BMad Superpower |
+| :--- | :---: | :--- | :--- | :--- |
+| **Winston** | 📐 | **System Architect** | Persistence schemas, state slices, WASM/Worker RPC. | `bmad-create-architecture`, `bmad-check-implementation-readiness` |
+| **Sally** | 🎨 | **UX & Design Specialist** | Design systems, glassmorphism, Tailwind CSS, responsive layouts. | `bmad-create-ux-design` |
+| **Eleanor** | 🌿 | **Human Experience & Empathy** | Cognitive load audits, light/dark contrast serenity, humane simplicity. | `bmad-cis-design-thinking`, `bmad-editorial-review-prose` |
+| **Chloe** | 📜 | **Brand & Storyteller** | Mission narrative, onboarding copy, brand consistency, public voice. | `bmad-cis-storytelling`, `bmad-cis-presentation-master` |
+| **Amelia** | 💻 | **Lead Software Engineer** | Modern component code, bug fixes, refactoring, atomic conventional commits. | `bmad-dev-story`, `bmad-quick-dev`, `bmad-code-review` |
+| **Murat** | 🛡️ | **QA Test Architect** | Unit tests (Vitest/Jest), boundary regressions, automated quality gates. | `bmad-tea`, `bmad-testarch-atdd`, `bmad-testarch-trace`, `bmad-testarch-nfr` |
+| **John** | 🚀 | **Product Manager** | User stories, acceptance criteria, milestone releases, and human-readable release notes. | `bmad-create-prd`, `bmad-validate-prd`, `bmad-create-epics-and-stories` |
 
 *Teams scale dynamically: Lean Pair (2 personas), Balanced Team (4 personas), or Full Guild (7 personas).*
 
 ---
 
+## ⚡ BMad Ecosystem Synergy
+
+While `ai-pair-programming` governs team alignment, human empathy, contrast defense, and git hygiene, it natively integrates with the **BMad Method** to unlock heavy execution tools:
+- **Murat's TEA Suite:** 9 Test Engineering Architecture skills including ATDD (failing acceptance tests before code), trace matrix, and adversarial code reviews.
+- **Winston's Architecture:** Pre-flight implementation readiness and solution design.
+- **John's Product Engine:** Structured PRD validation, epics sharding, and story spec creation.
+
+*The topology detector automatically spots missing BMad tooling and offers a guided, permissioned installation flow.*
+
+---
+
 ## 🛑 The 5 Non-Negotiable Hard Gates
 
-1. **Gate 1: Project Topology & Roster Approval Before Code** — Detect codebase structure before writing code.
+1. **Gate 1: Project Topology & BMad Roster Approval Before Code** — Detect codebase structure & evaluate BMad tooling before writing code.
 2. **Gate 2: Interactive Alignment Gate (`/grill-me` + `/plan`)** — Ask clarifying questions and generate an approved spec before implementation.
 3. **Gate 3: The "Two Main Players" & Inversion Safeguard** — Theme changes must coordinate **Background** and **Panels** together, and pass a Light/Dark Mode Inversion Audit.
 4. **Gate 4: Atomic Reversible Conventional Commits** — Record each unit of work in discrete, revertible conventional commits (`feat:`, `fix:`, `style:`).

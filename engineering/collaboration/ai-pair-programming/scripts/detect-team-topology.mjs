@@ -19,10 +19,13 @@ const args = process.argv.slice(2);
 let targetDir = process.cwd();
 let outputJson = false;
 let exportPath = null;
+let installBmadPrompt = false;
 
 for (let i = 0; i < args.length; i++) {
   if (args[i] === '--json') {
     outputJson = true;
+  } else if (args[i] === '--install-bmad' || args[i] === '--setup-bmad') {
+    installBmadPrompt = true;
   } else if (args[i] === '--export' && args[i + 1]) {
     exportPath = args[i + 1];
     i++;
@@ -35,6 +38,7 @@ Usage:
 Options:
   --json          Output results as JSON for agent automation
   --export <file> Write recommended team roster JSON to specified file
+  --install-bmad  Display guided BMad Method installation options for testing & architecture
   --help, -h      Display this help dialog
 `);
     process.exit(0);
@@ -103,6 +107,48 @@ const docFiles = findFiles(targetDir, name =>
   name.endsWith('.md') || name.endsWith('.mdx')
 );
 
+// Scan for BMad Framework & Skills
+function detectBMad(dir) {
+  const bmadLocations = [
+    path.join(dir, '.agent', 'skills'),
+    path.join(dir, '.skills'),
+    path.join(dir, 'skills'),
+    path.join(dir, '_bmad')
+  ];
+  const bmadSkills = new Set();
+  for (const loc of bmadLocations) {
+    if (fs.existsSync(loc)) {
+      try {
+        const items = fs.readdirSync(loc);
+        for (const item of items) {
+          if (item.startsWith('bmad-')) {
+            bmadSkills.add(item);
+          }
+        }
+      } catch (e) {
+        // Ignore read errors
+      }
+    }
+  }
+  const skillsArray = Array.from(bmadSkills);
+  const hasTea = bmadSkills.has('bmad-tea') || skillsArray.some(s => s.startsWith('bmad-testarch-'));
+  const hasArchitect = bmadSkills.has('bmad-agent-architect') || bmadSkills.has('bmad-create-architecture');
+  const hasPM = bmadSkills.has('bmad-agent-pm') || bmadSkills.has('bmad-create-prd');
+  const hasDev = bmadSkills.has('bmad-agent-dev') || bmadSkills.has('bmad-dev-story');
+
+  return {
+    installed: bmadSkills.size > 0,
+    skillCount: bmadSkills.size,
+    skills: skillsArray,
+    hasTea,
+    hasArchitect,
+    hasPM,
+    hasDev
+  };
+}
+
+const bmadInfo = detectBMad(targetDir);
+
 // 3. Evaluate Technology Pillars
 const pillars = {
   frontend: Boolean(
@@ -122,7 +168,9 @@ const pillars = {
   ),
   documentation: Boolean(
     hasSubdir('docs') || docFiles.length >= 3
-  )
+  ),
+  bmad: bmadInfo.installed,
+  bmadSkillCount: bmadInfo.skillCount
 };
 
 // 4. Recommend Persona Roster
@@ -134,8 +182,11 @@ personas.push({
   name: 'Amelia',
   badge: '💻',
   role: 'Lead Software Engineer',
-  rationale: 'Core implementation driver, executes approved plans with atomic reversible commits.',
-  essential: true
+  rationale: bmadInfo.hasDev
+    ? 'Core implementation driver, supercharged with BMad Dev (bmad-dev-story, bmad-code-review) and atomic commits.'
+    : 'Core implementation driver, executes approved plans with atomic reversible commits.',
+  essential: true,
+  bmad_superpower: bmadInfo.hasDev ? 'bmad-dev-story, bmad-code-review' : null
 });
 
 // Winston (Architect)
@@ -145,8 +196,11 @@ if (pillars.database || pillars.typescript || hasSubdir('services') || hasSubdir
     name: 'Winston',
     badge: '📐',
     role: 'System Architect',
-    rationale: `Detected ${pillars.database ? 'database/persistence layer' : 'system contracts'}; governs schemas, boundaries, and Gate 1 & 2.`,
-    essential: true
+    rationale: bmadInfo.hasArchitect
+      ? `Detected ${pillars.database ? 'database/persistence layer' : 'system contracts'}; armed with BMad Architecture (bmad-create-architecture, readiness checks).`
+      : `Detected ${pillars.database ? 'database/persistence layer' : 'system contracts'}; governs schemas, boundaries, and Gate 1 & 2.`,
+    essential: true,
+    bmad_superpower: bmadInfo.hasArchitect ? 'bmad-create-architecture' : 'bmad-create-architecture (available via BMad)'
   });
 }
 
@@ -158,7 +212,8 @@ if (pillars.frontend || pillars.styling) {
     badge: '🎨',
     role: 'UX & Design Specialist',
     rationale: `Detected UI framework and styling (${pillars.styling ? 'Tailwind/CSS system' : 'Components'}); enforces design systems, responsiveness, and Gate 3 (Two Main Players).`,
-    essential: true
+    essential: true,
+    bmad_superpower: bmadInfo.skills.includes('bmad-create-ux-design') ? 'bmad-create-ux-design' : null
   });
 }
 
@@ -170,7 +225,8 @@ if (pillars.frontend) {
     badge: '🌿',
     role: 'Human Experience & Empathy Strategist',
     rationale: 'Active for user-facing applications; guards contrast readability, light/dark mode serenity, and humane simplicity.',
-    essential: true
+    essential: true,
+    bmad_superpower: 'Integrates with BMad CIS & Design Thinking (Maya / Dr. Quinn)'
   });
 }
 
@@ -181,8 +237,11 @@ if (pillars.testing || testFiles.length > 0) {
     name: 'Murat',
     badge: '🛡️',
     role: 'QA Test Architect',
-    rationale: `Detected test framework (${testFiles.length} test files); enforces Gate 5 pre-flight verification and regression prevention.`,
-    essential: true
+    rationale: bmadInfo.hasTea
+      ? `Detected test framework (${testFiles.length} test files); fully armed with BMad TEA (Test Engineering Architecture, ATDD, trace matrix).`
+      : `Detected test framework (${testFiles.length} test files); enforces Gate 5 pre-flight verification. [Recommend BMad TEA for ATDD & trace matrix]`,
+    essential: true,
+    bmad_superpower: bmadInfo.hasTea ? 'bmad-tea, bmad-testarch-atdd, bmad-testarch-trace' : 'bmad-tea (Unlockable)'
   });
 } else {
   // Suggest adding Murat anyway for quality discipline
@@ -191,8 +250,11 @@ if (pillars.testing || testFiles.length > 0) {
     name: 'Murat',
     badge: '🛡️',
     role: 'QA Test Architect',
-    rationale: 'Recommended to scaffold initial test suites and enforce pre-flight build integrity.',
-    essential: false
+    rationale: bmadInfo.hasTea
+      ? 'Armed with BMad TEA to scaffold initial test suites and enforce pre-flight build integrity.'
+      : 'Recommended to scaffold initial test suites and enforce pre-flight build integrity.',
+    essential: false,
+    bmad_superpower: bmadInfo.hasTea ? 'bmad-tea' : 'bmad-tea (Unlockable)'
   });
 }
 
@@ -202,8 +264,11 @@ personas.push({
   name: 'John',
   badge: '🚀',
   role: 'Product Manager',
-  rationale: 'Maintains milestone trajectory, authors human-readable changelogs, and filters technical jargon from release notes.',
-  essential: true
+  rationale: bmadInfo.hasPM
+    ? 'Maintains milestone trajectory with BMad PRD tools (bmad-create-prd, bmad-create-epics-and-stories) and jargon-free release notes.'
+    : 'Maintains milestone trajectory, authors human-readable changelogs, and filters technical jargon from release notes.',
+  essential: true,
+  bmad_superpower: bmadInfo.hasPM ? 'bmad-create-prd, bmad-create-epics-and-stories' : 'bmad-create-prd (available via BMad)'
 });
 
 // Chloe (Brand Storyteller)
@@ -230,6 +295,7 @@ const result = {
   project_name: pkg?.name || path.basename(targetDir),
   project_path: targetDir,
   detected_pillars: pillars,
+  bmad_ecosystem: bmadInfo,
   recommended_topology: topologyTier,
   total_recommended_personas: personas.length,
   personas
@@ -262,13 +328,39 @@ console.log(`  • Styling System:      ${pillars.styling ? '✅ Yes (Tailwind/C
 console.log(`  • Database / State:    ${pillars.database ? '✅ Yes (PGlite/Postgres/State)' : '❌ None detected'}`);
 console.log(`  • Test Suites:         ${pillars.testing ? `✅ Yes (${testFiles.length} test files)` : '⚠️ None detected'}`);
 console.log(`  • TypeScript:          ${pillars.typescript ? '✅ Yes' : '❌ JavaScript'}`);
-console.log(`  • Documentation:       ${pillars.documentation ? `✅ Yes (${docFiles.length} markdown files)` : '⚠️ Minimal'}\n`);
+console.log(`  • Documentation:       ${pillars.documentation ? `✅ Yes (${docFiles.length} markdown files)` : '⚠️ Minimal'}`);
+console.log(`  • BMad Ecosystem:      ${bmadInfo.installed ? `✅ Active (${bmadInfo.skillCount} BMad skills detected, TEA: ${bmadInfo.hasTea ? 'Enabled' : 'Partial'})` : '⚡ Not detected (Upgrade Opportunity)'}\n`);
 
 console.log('👥 Recommended AI Persona Team:');
 for (const p of personas) {
   const status = p.essential ? '[Core]' : '[Recommended]';
   console.log(`  ${p.badge} ${p.name.padEnd(8)} | ${p.role.padEnd(30)} ${status}`);
   console.log(`     └─ ${p.rationale}`);
+  if (p.bmad_superpower) {
+    console.log(`        ⚡ BMad Superpower: ${p.bmad_superpower}`);
+  }
+}
+
+// BMad Recommendation / Installation Banner
+if (!bmadInfo.installed || installBmadPrompt) {
+  console.log('\n======================================================');
+  console.log('  💡 BMAD SUPERPOWER OPPORTUNITY (TESTING & ARCHITECTURE)');
+  console.log('======================================================');
+  console.log('BMad Method is not detected in this project.');
+  console.log('Installing BMad unlocks industry-grade tooling for your personas:');
+  console.log('  • 🛡️  Murat (QA Test Architect): Unlocks 9 Test Engineering Architecture (TEA) skills:');
+  console.log('      - bmad-testarch-atdd: Test-Driven Acceptance Testing (write failing tests before code)');
+  console.log('      - bmad-testarch-test-design: System-level & epic-level test strategy');
+  console.log('      - bmad-testarch-trace: Requirements-to-test traceability matrix');
+  console.log('      - bmad-testarch-nfr: Performance & security non-functional assessment');
+  console.log('      - bmad-code-review: Parallel adversarial review agents (Blind Hunter, Edge Case Hunter)');
+  console.log('  • 📐 Winston (Architect): bmad-create-architecture & bmad-check-implementation-readiness');
+  console.log('  • 🚀 John (Product Manager): bmad-create-prd, bmad-create-epics-and-stories, bmad-create-story');
+  console.log('  • 💻 Amelia (Lead Dev): bmad-dev-story & bmad-quick-dev\n');
+  console.log('👉 To install BMad in this project (after user approval):');
+  console.log('   Run: npx bmad-method install');
+  console.log('   Or:  agy plugin install https://github.com/bmad-code/bmad-method.git');
+  console.log('======================================================');
 }
 
 console.log('\n------------------------------------------------------');

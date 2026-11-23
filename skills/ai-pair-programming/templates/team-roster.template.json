@@ -21,6 +21,11 @@
         "Design data schemas and contract boundaries",
         "Lead technical planning and architectural reviews"
       ],
+      "bmad_superpowers": [
+        "bmad-create-architecture",
+        "bmad-check-implementation-readiness",
+        "bmad-correct-course"
+      ],
       "governs_gates": ["Gate 1: Project Topology & Roster Approval", "Gate 2: Plan Alignment"],
       "interaction_triggers": ["/plan", "architecture review", "schema change"]
     },
@@ -34,6 +39,9 @@
         "Design visual hierarchies, glassmorphic surfaces, and micro-interactions",
         "Enforce tokenization, spacing scales, and multi-breakpoint responsiveness",
         "Ensure layout stability across desktop, tablet, and mobile"
+      ],
+      "bmad_superpowers": [
+        "bmad-create-ux-design"
       ],
       "governs_gates": ["Gate 3: Two Main Players & Inversion Safeguard"],
       "interaction_triggers": ["design review", "theme change", "responsive layout"]
@@ -77,6 +85,11 @@
         "Implement approved plan specs without scope drift",
         "Execute atomic, reversible conventional commits for each unit of work"
       ],
+      "bmad_superpowers": [
+        "bmad-dev-story",
+        "bmad-quick-dev",
+        "bmad-code-review"
+      ],
       "governs_gates": ["Gate 4: Atomic Reversible Commits"],
       "interaction_triggers": ["implement", "fix bug", "refactor component"]
     },
@@ -91,6 +104,15 @@
         "Guard state integrity and boundary conditions",
         "Enforce pre-flight verification before code lands"
       ],
+      "bmad_superpowers": [
+        "bmad-tea",
+        "bmad-testarch-atdd",
+        "bmad-testarch-test-design",
+        "bmad-testarch-trace",
+        "bmad-testarch-nfr",
+        "bmad-testarch-test-review",
+        "bmad-qa-generate-e2e-tests"
+      ],
       "governs_gates": ["Gate 5: Strict Pre-Flight Verification Gate"],
       "interaction_triggers": ["run tests", "verify build", "quality audit", "reproduce bug"]
     },
@@ -104,6 +126,13 @@
         "Translate user intent into prioritized product epics and stories",
         "Maintain changelogs and author jargon-free release notes",
         "Govern release cadence and milestone completion"
+      ],
+      "bmad_superpowers": [
+        "bmad-create-prd",
+        "bmad-validate-prd",
+        "bmad-create-epics-and-stories",
+        "bmad-create-story",
+        "bmad-sprint-planning"
       ],
       "governs_gates": ["Gate 2: PRD Validation", "Gate 5: Release Readiness"],
       "interaction_triggers": ["/learn", "release version", "version history", "create prd"]
