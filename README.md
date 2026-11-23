@@ -18,6 +18,7 @@ npx skills add charles-prof/agent-skills --list     # browse before installing
 Or grab individual skills:
 
 ```bash
+npx skills add charles-prof/agent-skills --skill ai-pair-programming        # multi-persona pair programming & alignment gates
 npx skills add charles-prof/agent-skills --skill google-reviews-verification # authentic reviews & verification gate
 npx skills add charles-prof/agent-skills --skill wordpress-core-fse         # 8pt decoupled FSE & Block API v3
 npx skills add charles-prof/agent-skills --skill video-logo-removal          # frame-accurate video inpainting
@@ -80,6 +81,7 @@ npx skills add charles-prof/agent-skills -a cursor
 
 | Category | Skill Name (`npx`) | Maintained Path (Nested) | Flat Path (`skills/`) | Description |
 | :--- | :--- | :--- | :--- | :--- |
+| **Engineering / AI** | `ai-pair-programming` | [`engineering/collaboration/ai-pair-programming/`](./engineering/collaboration/ai-pair-programming/) | [`skills/ai-pair-programming/`](./skills/ai-pair-programming/) | Architectural runbook and operational framework for high-fidelity AI pair-programming: dynamic 7-persona team orchestration, project topology detection, interactive alignment gates (`/plan`, `/grill-me`), regression defense, and pre-flight verification. |
 | **Research / Reviews** | `google-reviews-verification` | [`research/reviews/google-reviews-verification/`](./research/reviews/google-reviews-verification/) | [`skills/google-reviews-verification/`](./skills/google-reviews-verification/) | Scrape, authenticate, and cross-verify real Google Reviews with a mandatory human-in-the-loop confirmation gate, Zero AI avatar policy, and schema generator. |
 | **CMS / WordPress** | `wordpress-core-fse` | [`cms/wordpress/core-fse/`](./cms/wordpress/core-fse/) | [`skills/wordpress-core-fse/`](./skills/wordpress-core-fse/) | Architectural procedure for engineering decoupled WordPress Full Site Editing (FSE) block themes (8pt grid, Block API v3, SMACSS). |
 | **Workflow / Video** | `video-logo-removal` | [`workflow/video-editing/removals/`](./workflow/video-editing/removals/) | [`skills/video-logo-removal/`](./skills/video-logo-removal/) | Spatial inpainting (`delogo`) & matting (`drawbox`) for frame-accurate graphic removal without cutting footage or desyncing audio. |
@@ -101,10 +103,12 @@ agent-skills/
 ├── scripts/
 │   └── sync_skills.py                     # Sync engine & CI verifier
 ├── skills/                                # Flat directory for npx skills CLI
+│   ├── ai-pair-programming/
 │   ├── google-reviews-verification/
 │   ├── wordpress-core-fse/
 │   └── video-logo-removal/
 └── (Domain Categories — Source of Truth)
+    ├── engineering/collaboration/ai-pair-programming/
     ├── cms/wordpress/core-fse/
     ├── research/reviews/google-reviews-verification/
     └── workflow/video-editing/removals/
