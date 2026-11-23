@@ -1,6 +1,6 @@
 {
   "name": "@charles-prof/agent-skills",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Production-grade AI agent skills and multi-persona engineering runbooks for Antigravity, Claude Code, Cursor, and Gemini CLI",
   "scripts": {
     "sync": "python3 scripts/sync_skills.py",
@@ -16,6 +16,9 @@
     "ai-pair-programming",
     "multi-agent",
     "teamwork",
+    "seo",
+    "performance",
+    "core-web-vitals",
     "skills"
   ],
   "author": "Charles Kumar",
